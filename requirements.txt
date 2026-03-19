@@ -1,6 +1,5 @@
 Flask
 tensorflow
-tf-keras
 Pillow
 numpy
 Werkzeug
