@@ -1,6 +1,3 @@
-import os
-os.environ['TF_USE_LEGACY_KERAS'] = '1'
-
 from flask import Flask, render_template, request, jsonify
 import tensorflow as tf
 import numpy as np
@@ -8,7 +5,7 @@ from PIL import Image
 
 app = Flask(__name__)
 
-model = tf.keras.models.load_model('model_awan_rafi_v3.h5', compile=False)
+model = tf.keras.models.load_model('model_awan_rafi_v3.h5')
 kelas = ['Cumulonimbus','Cumulus','Stratus']
 
 @app.route('/')
