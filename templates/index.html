@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a" />
+    <title>AI Cloud Predictor - Rafi IYSA 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="background-effect"></div>
+    
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-cloud-sun-rain"></i> CloudAI
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#app" class="nav-link">Predictor App</a></li>
+                <li><a href="#credits" class="nav-link">About Research</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-wrapper">
+        
+        <section id="home" class="section hero-section">
+            <div class="glass-container big-container">
+                <div class="header">
+                    <h2>Selamat Datang di</h2>
+                    <h1 class="highlight">Cloud Predictor AI</h1>
+                    <p class="subtitle">Sistem Klasifikasi Formasi Awan & Prediksi Cuaca Lokal dengan Metode Convolutional Neural Network (CNN)</p>
+                </div>
+                
+                <div class="tutorial-wrapper">
+                    <div class="tutorial-card">
+                        <i class="fas fa-camera"></i>
+                        <h4>1. Potret & Unggah</h4>
+                        <p>Ambil foto formasi awan di sekitarmu menggunakan kamera HP.</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <i class="fas fa-brain"></i>
+                        <h4>2. Analisis AI</h4>
+                        <p>AI akan memindai fitur visual bentuk dan tekstur awan.</p>
+                    </div>
+                    <div class="tutorial-card">
+                        <i class="fas fa-cloud-rain"></i>
+                        <h4>3. Hasil Instan</h4>
+                        <p>Dapatkan prediksi cuaca lokal (Cerah/Hujan/Mendung) dalam hitungan detik.</p>
+                    </div>
+                </div>
+                <a href="#app" class="cta-button">Coba Aplikasinya <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </section>
+
+        <section id="app" class="section app-section">
+            <div class="glass-container app-box">
+                <div class="upload-section">
+                    <input type="file" id="fileInput" accept="image/*" capture="environment" multiple hidden>
+                    <div class="drop-zone" id="dropZone">
+                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                        <span id="fileName">Klik atau Tarik Foto Awan di Sini</span>
+                    </div>
+
+                    <p id="orientationStatus" class="orientation-status">Orientasi: -</p>
+
+                    <div class="capture-actions">
+                        <button id="startCameraBtn" class="secondary-button" type="button">
+                            <i class="fas fa-video"></i> Ambil Foto Langsung
+                        </button>
+                        <button id="stopCameraBtn" class="secondary-button" type="button" style="display:none;">
+                            <i class="fas fa-stop-circle"></i> Hentikan Kamera
+                        </button>
+                        <button id="captureBtn" class="secondary-button" type="button" style="display:none;">
+                            <i class="fas fa-camera-retro"></i> Tangkap
+                        </button>
+                    </div>
+
+                    <video id="cameraVideo" class="camera-video" autoplay playsinline muted style="display:none;"></video>
+
+                    <div id="imagePreviewContainer" style="display: none;">
+                        <img id="imagePreview" src="" alt="Preview Awan">
+                    </div>
+
+                </div>
+
+                <button id="predictBtn" onclick="uploadImage()" disabled>
+                    <i class="fas fa-bolt"></i> Analisis Formasi Awan
+                </button>
+                <button id="resetBtn" class="reset-button" style="display: none;" type="button">
+                    <i class="fas fa-redo-alt"></i> Coba Foto Lain
+                </button>
+                <div id="loading" class="loading-spinner" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Meningkatkan Kognisi AI, Sedang Berpikir...</p>
+                </div>
+
+                <div id="messageBox" class="message-box" aria-live="polite" style="display:none;"></div>
+
+                <div id="result" class="result-card" style="display: none;">
+                    <div class="result-item">
+                        <span class="label">Jenis Awan:</span>
+                        <span id="cloudType" class="value highlight">-</span>
+                    </div>
+                    
+                    <div class="accuracy-wrapper">
+                        <span class="label">Akurasi AI:</span>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="accuracyFill" style="width: 0%;"></div>
+                        </div>
+                        <span id="accuracy" class="accuracy-text">-</span>
+                    </div>
+
+                    <div class="result-divider"></div>
+                    <div class="weather-prediction">
+                        <h4>Prediksi Cuaca Lokal:</h4>
+                        <p id="prediction">-</p>
+                        <p id="predictionAdvice" class="prediction-advice"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="credits" class="section credits-section">
+            <div class="glass-container big-container">
+                <h2>Di Balik Layar Riset</h2>
+                <div class="result-divider"></div>
+                
+                <div class="credits-wrapper">
+                    <div class="profile-card">
+                        <img src="{{ url_for('static', filename='profil.jpeg') }}" alt="Foto Peneliti" class="profile-image">
+                        <h3>Muhammad Rafi Nur Setiawan</h3>
+                        <p>Peneliti Utama</p>
+                        <p class="institution">Informatika, UNUSIDA</p>
+                    </div>
+                    <div class="research-info">
+                        <h4>Konteks Penelitian:</h4>
+                        <p class="research-context">Penelitian ini diajukan untuk ajang kompetisi <strong>IYSA 2026</strong>. Pengembangan model klasifikasi awan menggunakan algoritma <strong>Convolutional Neural Network (CNN)</strong> dengan variasi dataset untuk meningkatkan akurasi dalam berbagai kondisi pencahayaan.</p>
+                        <p class="disclaimer"><em>Catatan: prediksi ini bersifat pendekatan sederhana berdasarkan fitur visual awan dari tanah, dan tidak menggantikan sistem meteorologi resmi.</em></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    </body>
+</html>
